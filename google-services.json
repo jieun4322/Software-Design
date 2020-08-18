@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "555238464317",
+    "firebase_url": "https://primeval-legacy-284106.firebaseio.com",
+    "project_id": "primeval-legacy-284106",
+    "storage_bucket": "primeval-legacy-284106.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:555238464317:android:f37c2c968ae03a36b28354",
+        "android_client_info": {
+          "package_name": "com.mycompany.mapapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "555238464317-4hc2diq4admjb1umulkju6vvhmrspvss.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCC0cpkCyrrKRtOeBb6Jj4PgtK8TnAJIyc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "555238464317-4hc2diq4admjb1umulkju6vvhmrspvss.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "555238464317-vmpam6f7pkfo4tcknq5jlqjbmsu9h0v4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mycompany.mapapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
