@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, View, Text, StatusBar, TextInput, Alert, AsyncStorage } from 'react-native';
+import { StyleSheet, View, Text, TextInput, Alert, AsyncStorage } from 'react-native';
 import CustomButton from './custombutton';
 import {AuthContext} from './GlobalVar';
 
@@ -7,7 +7,31 @@ export default function Login({ navigation }) {
     const [value1, onChangeText1] = React.useState('');
     const [value2, onChangeText2] = React.useState('');
     const { signIn } = React.useContext(AuthContext);
-      return (
+    const ref_input2 = React.useRef();
+    
+    const onClick = async() => {
+      let data;
+      try {
+        data = await AsyncStorage.getItem(value1);
+        data == value2
+          ? (
+            Alert.alert("로그인이 완료되었습니다."),
+            signIn({ value1, value2 })
+          ) : data == null ? (
+            Alert.alert("아이디를 잘못 입력하였습니다.")
+          ) : (
+            Alert.alert("비밀번호를 잘못 입력하였습니다.")
+          )
+      } catch(error) {
+        Alert.alert("Alert","아이디를 잘못 입력하였습니다.");
+      }
+    }
+  
+    const onKeyPress = () => {
+      onClick();
+    }
+
+    return (
         <View style={{
           flex: 1,
           padding: 10,
@@ -49,6 +73,10 @@ export default function Login({ navigation }) {
                     maxLength={20}
                     onChangeText={text => onChangeText1(text)}
                     value={value1}
+                    blurOnSubmit={false}
+                    returnKeyType = {"next"}
+                    autoFocus={true}
+                    onSubmitEditing={() => ref_input2.current.focus()}
                   />
                 </View>
                 <View style={{
@@ -71,6 +99,9 @@ export default function Login({ navigation }) {
                     onChangeText={text => onChangeText2(text)}
                     value={value2}
                     secureTextEntry
+                    ref={ref_input2}
+                    blurOnSubmit={true}
+                    onSubmitEditing={onKeyPress}
                   />
                 </View>
               </View>
@@ -99,23 +130,7 @@ export default function Login({ navigation }) {
                     titleColor={"white"}
                     buttonColor={'#023e73'}
                     title={"로그인"} 
-                    onPress={ async() => {
-                      let data;
-                      try {
-                        data = await AsyncStorage.getItem(value1);
-                        data == value2
-                          ? (
-                            Alert.alert("로그인이 완료되었습니다."),
-                            signIn({ value1, value2 })
-                          ) : data == null ? (
-                            Alert.alert("아이디를 잘못 입력하였습니다.")
-                          ) : (
-                            Alert.alert("비밀번호를 잘못 입력하였습니다.")
-                          )
-                      } catch(error) {
-                        Alert.alert("Alert","아이디를 잘못 입력하였습니다.");
-                      }
-                    }} 
+                    onPress={onClick} 
                   />
                 </View>
               </View>
