@@ -18,13 +18,29 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.mycompany.mapapp"
+      "bundleIdentifier": "com.mycompany.mapapp",
+      "infoPlist": {
+        "UIBackgroundModes": [
+          "location",
+          "fetch"
+        ],
+        "LSApplicationQueriesSchemes": [
+          "Map_app"
+        ],
+        "NSCameraUsageDescription": "L’application utilise l’appareil photo pour prendre une photo ou numériser vos documents.",
+        "NSLocationWhenInUseUsageDescription": "L’application utilise votre position pour aider les chauffeurs ou les transporteurs à vous trouver sur la carte."
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "android": {
-      "package": "com.mycompany.mapapp"
+      "googleServicesFile": "./google-services.json",
+      "package": "com.mycompany.mapapp",
+      "permissions": [
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION"
+      ]
     }
   }
 }

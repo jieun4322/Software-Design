@@ -2,6 +2,7 @@ import * as React from 'react';
 import { StyleSheet, View, Text, TextInput, Alert, AsyncStorage } from 'react-native';
 import CustomButton from './custombutton';
 import {AuthContext} from './GlobalVar';
+import firebase from "firebase";
 
 export default function Login({ navigation }) {
     const [value1, onChangeText1] = React.useState('');
@@ -10,6 +11,7 @@ export default function Login({ navigation }) {
     const ref_input2 = React.useRef();
     
     const onClick = async() => {
+      /*
       let data;
       try {
         data = await AsyncStorage.getItem(value1);
@@ -25,6 +27,16 @@ export default function Login({ navigation }) {
       } catch(error) {
         Alert.alert("Alert","아이디를 잘못 입력하였습니다.");
       }
+      */
+     firebase.auth()
+        .signInWithEmailAndPassword(value1, value2)
+        .then(() => { signIn({ value1 }), Alert.alert("로그인이 완료되었습니다.") })
+        .catch(function(error) {
+          var errorMessage = error.message;
+          alert(errorMessage);
+          
+          console.log(error);
+        });
     }
   
     const onKeyPress = () => {
@@ -64,7 +76,7 @@ export default function Login({ navigation }) {
                     height: 30,
                     fontSize: 20
                   }}>
-                    아이디
+                    이메일
                   </Text>
                   <TextInput
                     style={{flex: 2, height: 30, borderWidth: 1, borderRadius: 5}}

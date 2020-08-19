@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 
-export default class custombutton1 extends Component{
+export default class custombutton extends Component{
   static defaultProps = {
     title: 'untitled',
     buttonColor: 'white',
@@ -37,7 +37,7 @@ export default class custombutton1 extends Component{
   }
 }
 
-custombutton1.propTypes = {
+custombutton.propTypes = {
   title: PropTypes.string.isRequired,
   buttonColor: PropTypes.string.isRequired,
   titleColor: PropTypes.string.isRequired,

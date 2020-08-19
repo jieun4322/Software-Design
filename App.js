@@ -72,12 +72,12 @@ export default function App({ route, Navigation }) {
   const [state, dispatch] = React.useReducer(
     (prevState, action) => {
       switch (action.type) {
-        case 'RESTORE_TOKEN':
+        /*case 'RESTORE_TOKEN':
           return {
             ...prevState,
             userToken: action.token,
             isLoading: false,
-          };
+          };*/
         case 'SIGN_IN':
           return {
             ...prevState,
@@ -98,7 +98,7 @@ export default function App({ route, Navigation }) {
       userToken: null,
     }
   );
-
+  /*
   React.useEffect(() => {
     const bootstrapAsync = async () => {
       let userToken;
@@ -111,15 +111,12 @@ export default function App({ route, Navigation }) {
     };
     bootstrapAsync();
   }, []);
-
+  */
   const authContext = React.useMemo( () => ({
       signIn: async data => {
         dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
       },
-      signOut: () => dispatch({ type: 'SIGN_OUT' }),
-      signUp: async data => {
-        dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
-      },
+      signOut: async data => dispatch({ type: 'SIGN_OUT' })
     }),
     []);
 

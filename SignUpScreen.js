@@ -1,16 +1,27 @@
 import React, { useState, useRef } from 'react';
-import { StyleSheet, View, Text, TextInput, Alert, AsyncStorage } from 'react-native';
+import { StyleSheet, View, Text, TextInput, Alert, AsyncStorage, YellowBox } from 'react-native';
 import CustomButton from './custombutton';
+import firebase from "firebase";
 
+// Optionally import the services that you want to use
+//import "firebase/auth";
+//import "firebase/database";
+//import "firebase/firestore";
+//import "firebase/functions";
+//import "firebase/storage";
+// Initialize Firebase
+
+YellowBox.ignoreWarnings(['Setting a timer']);
 export default function SignUp({ navigation }) {
   const [value1, onChangeText1] = useState('');
   const [value2, onChangeText2] = useState('');
   const [value3, onChangeText3] = useState('');
-  
+
   const ref_input2 = useRef();
   const ref_input3 = useRef();
 
   const onClick = () => { 
+    /*
     value2 == value3
       ? (
         value1 != '' && value2 != ''
@@ -23,6 +34,38 @@ export default function SignUp({ navigation }) {
           )
       ) : (
         Alert.alert("Alert","비밀번호와 확인이 동일하지 않습니다.")
+      )
+    */
+    
+    //  email, password = value1, value2
+    
+
+    value2 == value3 
+      ? (
+        firebase.auth()
+          .createUserWithEmailAndPassword(value1, value2)
+            .then((authUser) => {
+              navigation.popToTop(),
+              Alert.alert("회원가입이 완료되었습니다."),
+              firebase.database().ref("/users/")
+                .child(authUser.user.uid)
+                .set({
+                  value1,
+                  value2
+                })
+            })
+            .catch(function(error) {
+              var errorCode = error.code;
+              var errorMessage = error.message;
+              if (errorCode == 'auth/weak-password') {
+                alert('The password is too weak.');
+              } else {
+                alert(errorMessage);
+              }
+              console.log(error);
+            })
+      ) : (
+        Alert.alert("비밀번호와 확인이 일치하지 않습니다.")
       )
   }
 
@@ -64,7 +107,7 @@ export default function SignUp({ navigation }) {
                 height: 30,
                 fontSize: 20,
               }}>
-                아이디
+                이메일
               </Text>
               <TextInput
                 onSubmitEditing={() => ref_input2.current.focus()}
