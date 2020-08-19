@@ -7,9 +7,10 @@ import firebase from "firebase";
 export default function Settingdata({ navigation }) {
   const { signOut } = React.useContext(AuthContext);
   const onPress = async() => {
-    signOut(null), 
-    firebase.auth().signOut();
-    Alert.alert("로그아웃되었습니다.")
+    firebase.auth().signOut().then(()=>{
+      signOut(null), 
+      Alert.alert("로그아웃되었습니다.")
+    })
   }
   const data = [["Date 1","Date 2","Date 3","Date 4","Date 5","Date 6","Date 7","Date 8","Date 9","Date 10"]];
   return (

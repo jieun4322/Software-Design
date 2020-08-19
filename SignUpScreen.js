@@ -20,26 +20,9 @@ export default function SignUp({ navigation }) {
   const ref_input2 = useRef();
   const ref_input3 = useRef();
 
-  const onClick = () => { 
-    /*
-    value2 == value3
-      ? (
-        value1 != '' && value2 != ''
-          ? ( 
-            Alert.alert("Alert","회원가입이 완료되었습니다."),
-            navigation.popToTop(),
-            AsyncStorage.setItem(value1, value2)
-          ) : (
-            Alert.alert("Alert", "아이디 또는 비밀번호가 비어 있습니다.")
-          )
-      ) : (
-        Alert.alert("Alert","비밀번호와 확인이 동일하지 않습니다.")
-      )
-    */
-    
-    //  email, password = value1, value2
-    
+  var provider = new firebase.auth.GoogleAuthProvider();
 
+  const onClick = () => { 
     value2 == value3 
       ? (
         firebase.auth()
@@ -73,6 +56,30 @@ export default function SignUp({ navigation }) {
     onClick();
   }
 
+  const onClick_Google = () => {
+    provider.addScope('profile');
+    provider.addScope('https://www.googleapis.com/auth/drive');
+    firebase.auth().signInWithPopup(provider)
+      .then((result) => {
+        var token = result.credential.accessToken;
+        var user = result.user;
+        console.log("성공");
+      }).catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        var email = error.email;
+        var credential = error.credential;
+        console.log(errorMessage);
+        Alert.alert(errorMessage);
+      })
+    
+    firebase.auth().getRedirectResult()
+      .then((authData) => {
+        console.log(authData);
+      }).catch((error) => {
+        console.log(error);
+      });
+  }
 
   return (
     <View style={{
@@ -175,6 +182,16 @@ export default function SignUp({ navigation }) {
                 ref={ref_input3}
               />
             </View>
+          </View>
+        </View>
+        <View style={{flex: 1}}>
+          <View style={{flex: 1}}>
+            <CustomButton 
+              titleColor={"white"}
+              buttonColor={'#023e73'}
+              title={"구글 로그인"} 
+              onPress={onClick_Google}
+            />
           </View>
         </View>
         <View style={{flex: 2, alignItems: "center"}}>
