@@ -8,12 +8,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:324925880954:android:290d1228f69e1877dad9c3",
+        "mobilesdk_app_id": "1:324925880954:android:0c6103666a7b416cdad9c3",
         "android_client_info": {
           "package_name": "com.mycompany.mapapp"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "324925880954-b3fq03knudvcckep09eq646ssiekf324.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mycompany.mapapp",
+            "certificate_hash": "1c1c73af7cf8cade7b1aa384742460f2422c3d0a"
+          }
+        },
         {
           "client_id": "324925880954-n9saar2vo1i5aja6q6l9kj5547uq2jdp.apps.googleusercontent.com",
           "client_type": 3
@@ -28,7 +36,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "324925880954-n9saar2vo1i5aja6q6l9kj5547uq2jdp.apps.googleusercontent.com",
+              "client_id": "324925880954-njsega7jfjjf0rutj9ivig7cp84flc16.apps.googleusercontent.com",
               "client_type": 3
             },
             {

@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, TextInput, Alert, AsyncStorage } from 'react-na
 import CustomButton from './custombutton';
 import {AuthContext} from './GlobalVar';
 import firebase from "firebase";
+import SocialSignInButton from './SocialSigninButton';
 
 export default function Login({ navigation }) {
     const [value1, onChangeText1] = React.useState('');
@@ -118,11 +119,35 @@ export default function Login({ navigation }) {
                 </View>
               </View>
             </View>
-            <View style={{flex: 2, alignItems: "center"}}>
+            <View style={{flex: 1}}>
+              <View style={{flex: 1}}>
+                <View style={{padding: 5, marginBottom: 10, borderRadius: 20}}>
+                 <SocialSignInButton
+                    clientId={`302091027714945`}
+                    clientSecret={`272f68e4f928ba0d56237660ee8d12c9`}
+                    onUserCreated={(user) => {
+                      signIn(user);
+                    }}
+                    socialProvider={"facebook"}
+                  />
+                </View>
+                <View style={{padding: 5, marginBottom: 10, borderRadius: 20}}>
+                  <SocialSignInButton
+                    clientId={`324925880954-njsega7jfjjf0rutj9ivig7cp84flc16.apps.googleusercontent.com`}
+                    clientSecret={`uYLuA42qTrwFL47VcXcwrtJC`}
+                    onUserCreated={(user) => {
+                      signIn(user);
+                    }}
+                    socialProvider={"google"}
+                  />
+                </View>
+              </View>
+            </View>
+            <View style={{flex: 1, alignItems: "center"}}>
               <View style={styles.footer}>
                 <View style={{
                   width: "100%",
-                  height: "20%",
+                  height: "40%",
                   borderWidth: 1,
                   marginBottom: 10
                 }}>
@@ -135,7 +160,7 @@ export default function Login({ navigation }) {
                 </View>
                 <View style={{
                   width: "100%",
-                  height: "20%",
+                  height: "40%",
                   borderWidth: 1,
                 }}>
                   <CustomButton 

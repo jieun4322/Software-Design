@@ -2,6 +2,7 @@
   "expo": {
     "name": "map_app",
     "slug": "map_app",
+    "scheme": "mapapp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -19,17 +20,12 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.mycompany.mapapp",
-      "infoPlist": {
-        "UIBackgroundModes": [
-          "location",
-          "fetch"
-        ],
-        "LSApplicationQueriesSchemes": [
-          "Map_app"
-        ],
-        "NSCameraUsageDescription": "L’application utilise l’appareil photo pour prendre une photo ou numériser vos documents.",
-        "NSLocationWhenInUseUsageDescription": "L’application utilise votre position pour aider les chauffeurs ou les transporteurs à vous trouver sur la carte."
-      }
+      "config": {
+        "googleSignIn": {
+          "reservedClientId": "com.googleusercontent.apps.324925880954-ha8d589qhdamvh3p3oodu65n4ldeebgk"
+        }
+      },
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "web": {
       "favicon": "./assets/favicon.png"

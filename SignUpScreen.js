@@ -1,27 +1,25 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { StyleSheet, View, Text, TextInput, Alert, AsyncStorage, YellowBox } from 'react-native';
 import CustomButton from './custombutton';
 import firebase from "firebase";
-
-// Optionally import the services that you want to use
-//import "firebase/auth";
-//import "firebase/database";
-//import "firebase/firestore";
-//import "firebase/functions";
-//import "firebase/storage";
-// Initialize Firebase
+import * as Google from 'expo-google-app-auth';
+import * as AuthSession from 'expo-auth-session';
+import * as GoogleSignIn from 'expo-google-sign-in';
+import SocialSignInButton from './SocialSigninButton';
+import SvgGoogle from './assets/svgs/google.svg';
+import {AuthContext} from "./GlobalVar";
 
 YellowBox.ignoreWarnings(['Setting a timer']);
 export default function SignUp({ navigation }) {
   const [value1, onChangeText1] = useState('');
   const [value2, onChangeText2] = useState('');
   const [value3, onChangeText3] = useState('');
-
+  const [user, onChangeUser] = useState(null);
+  const { signIn } = React.useContext(AuthContext);
   const ref_input2 = useRef();
   const ref_input3 = useRef();
 
-  var provider = new firebase.auth.GoogleAuthProvider();
-
+  var provider = new firebase.auth.GoogleAuthProvider;
   const onClick = () => { 
     value2 == value3 
       ? (
@@ -56,7 +54,8 @@ export default function SignUp({ navigation }) {
     onClick();
   }
 
-  const onClick_Google = () => {
+  const onClick_Google = async() => {
+    /*
     provider.addScope('profile');
     provider.addScope('https://www.googleapis.com/auth/drive');
     firebase.auth().signInWithPopup(provider)
@@ -79,8 +78,83 @@ export default function SignUp({ navigation }) {
       }).catch((error) => {
         console.log(error);
       });
+      */
+     /*
+    if (user) {
+      signOutAsync();
+    } else {
+      signInAsync();
+    }*/
+    /*
+    try {
+      const result = await Google.logInAsync({
+        expoClientId: `324925880954-njsega7jfjjf0rutj9ivig7cp84flc16.apps.googleusercontent.com`,
+        androidClientId: "324925880954-b3fq03knudvcckep09eq646ssiekf324.apps.googleusercontent.com",
+        iosClientId: "324925880954-ha8d589qhdamvh3p3oodu65n4ldeebgk.apps.googleusercontent.com",
+        androidStandaloneAppClientId: `324925880954-b3fq03knudvcckep09eq646ssiekf324.apps.googleusercontent.com`,
+        iosStandaloneAppClientId: `324925880954-ha8d589qhdamvh3p3oodu65n4ldeebgk.apps.googleusercontent.com`,
+        redirectUrl: "http://localhost:19001/node_modules%5Cexpo%5CAppEntry.bundle"
+      });
+  
+      if (result.type === 'success') {
+        console.log(result.user, result.accessToken);
+      } else {
+        return { cancelled: true };
+      }
+    } catch (e) {
+      console.log(e);
+      Alert.alert(e);
+      return { error: true };
+    }
+*/
+    
   }
+  /*
+  useEffect(() => {
+    initAsync();
+  },[])
 
+  initAsync = async () => {
+    await GoogleSignIn.initAsync({
+      // You may ommit the clientId when the firebase `googleServicesFile` is configured
+      clientId: '324925880954-ha8d589qhdamvh3p3oodu65n4ldeebgk.apps.googleusercontent.com',
+    });
+    _syncUserWithStateAsync();
+  };
+
+  _syncUserWithStateAsync = async () => {
+    const user = await GoogleSignIn.signInSilentlyAsync();
+    if (user != null) {
+      navigation.popToTop(),
+      Alert.alert("회원가입이 완료되었습니다."),
+      firebase.database().ref("/users/")
+        .child(user.uid)
+        .set({
+          value1,
+          value2
+        })
+    }
+    onChangeUser(user);
+  };
+
+  signOutAsync = async () => {
+    await GoogleSignIn.signOutAsync();
+    Alert.alert("로그아웃 하였습니다.");
+    onChangeUser(null);
+  };
+
+  signInAsync = async () => {
+    try {
+      await GoogleSignIn.askForPlayServicesAsync();
+      const { type, user } = await GoogleSignIn.signInAsync();
+      if (type === 'success') {
+        _syncUserWithStateAsync();
+      }
+    } catch ({ message }) {
+      alert('login: Error:' + message);
+    }
+  };
+*/
   return (
     <View style={{
       flex: 1,
@@ -186,19 +260,33 @@ export default function SignUp({ navigation }) {
         </View>
         <View style={{flex: 1}}>
           <View style={{flex: 1}}>
-            <CustomButton 
-              titleColor={"white"}
-              buttonColor={'#023e73'}
-              title={"구글 로그인"} 
-              onPress={onClick_Google}
-            />
+            <View style={{padding: 5, marginBottom: 10, borderRadius: 20}}>
+             <SocialSignInButton
+                clientId={`302091027714945`}
+                clientSecret={`272f68e4f928ba0d56237660ee8d12c9`}
+                onUserCreated={(user) => {
+                  signIn(user);
+                }}
+                socialProvider={"facebook"}
+              />
+            </View>
+            <View style={{padding: 5, marginBottom: 10, borderRadius: 20}}>
+              <SocialSignInButton
+                clientId={`324925880954-njsega7jfjjf0rutj9ivig7cp84flc16.apps.googleusercontent.com`}
+                clientSecret={`uYLuA42qTrwFL47VcXcwrtJC`}
+                onUserCreated={(user) => {
+                  signIn(user);
+                }}
+                socialProvider={"google"}
+              />
+            </View>
           </View>
         </View>
-        <View style={{flex: 2, alignItems: "center"}}>
+        <View style={{flex: 1, alignItems: "center"}}>
           <View style={styles.footer}>
             <View style={{
               width: "100%",
-              height: "20%",
+              height: "40%",
               borderWidth: 1,
               marginBottom: 10
             }}>
@@ -211,7 +299,7 @@ export default function SignUp({ navigation }) {
             </View>
             <View style={{
               width: "100%",
-              height: "20%",
+              height: "40%",
               borderWidth: 1,
             }}>
               <CustomButton 
