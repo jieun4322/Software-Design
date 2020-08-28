@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Alert } from 'react-native';
+import { StyleSheet, View, Alert, Text } from 'react-native';
 import CustomButton from './custombutton';
 import MapView, { PROVIDER_GOOGLE, Marker, UrlTile } from 'react-native-maps';
 import * as Location from "expo-location";
@@ -43,7 +43,9 @@ export default class MainScreen extends Component {
     var data = [["Date 1","Date 2","Date 3","Date 4","Date 5","Date 6","Date 7","Date 8","Date 9","Date 10"]];
     return (
         <View style={styles.dropmenubar}>
-        
+        <View style={styles.title}>
+        <Text style={{fontSize:25,color:'black'}}>Today Traffic Line</Text>
+        </View>
           <MapView
               style={{marginBottom: this.state.bottomMargin,...styles.mapcontainer}}
               provider={PROVIDER_GOOGLE}
@@ -80,40 +82,48 @@ export default class MainScreen extends Component {
 
 const styles = StyleSheet.create({
   dropmenubar: {
-    flex: 10
+    flex: 4
   },
   dropmenu: {
-    flex: 1,
+    flex: 4,
     alignItems: 'center',
     justifyContent: "center"
   },
+  title: {
+    width:'100%',
+    height:'30%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: "#FFFFFF",
+  },
   mapcontainer: {
-    flex: 10
+    flex: 4
   },
   container: {
     flex: 2,
     alignItems: 'center',
     justifyContent: "center",
-    backgroundColor: "#48FFFF",
-    borderTopWidth: 2,
-    borderColor: "#FFCCFF"
+    backgroundColor: "#FFFFFF",
+    borderTopWidth: 4,
+    
+    borderColor: "#A0C6FF"
   },
   menubar: {
-    flex: 1,
+    flex: 2,
     alignItems: 'center',
     justifyContent: "center",
-    backgroundColor: "#48FFFF"
+    backgroundColor: "#FFFFFF"
   },
   checkbutton: {
-    width: '60%',
-    height: "50%",
-    color: "#2c2c2c",
+    width: '40%',
+    height: "20%",
+    color: "#FFFFFF",
     justifyContent: 'center',
     fontSize: 24,
-    borderWidth: 2,
+    borderWidth: 3,
     marginTop: 10,
     marginBottom: 5,
     borderRadius: 5,
-    borderColor: "#FFCCFF"
+    borderColor: "#A0C6FF"
   },
 });

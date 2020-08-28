@@ -320,27 +320,27 @@ const styles = StyleSheet.create({
     flex: 2,
     alignItems: 'center',
     justifyContent: "center",
-    backgroundColor: "#48FFFF",
-    borderTopWidth: 2,
-    borderBottomWidth: 2,
-    borderColor: "#FFCCFF"
+    backgroundColor: "#FFFFFF",
+    borderTopWidth: 4,
+    //borderBottomWidth: 4,
+    borderColor: "#A0C6FF"
   },
   menubar: {
     flex: 1,
     alignItems: 'center',
     justifyContent: "center",
-    backgroundColor: "#48FFFF"
+    backgroundColor: "#A0C6FF"
   },
   checkbutton: {
-    width: '60%',
-    height: "50%",
-    color: "#2c2c2c",
+    width: '40%',
+    height: "30%",
+    color: "#FFFFFF",
     fontSize: 24,
-    borderWidth: 2,
+    borderWidth: 3,
     marginTop: 10,
     marginBottom: 5,
     borderRadius: 5,
-    borderColor: "#FFCCFF"
+    borderColor: "#A0C6FF"
   },
   loadingcontainer: {
       flex: 1

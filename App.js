@@ -13,9 +13,10 @@ import Othersdata from './Othersdata';
 import Settingdata from './Settingdata';
 import {AuthContext} from './GlobalVar';
 import Icon from "react-native-vector-icons/Ionicons";
+import { SimpleLineIcons } from '@expo/vector-icons';
 import * as TaskManager from 'expo-task-manager';
 import * as Location from 'expo-location';
-
+import { Feather } from '@expo/vector-icons';
 /*
 const LOCATION_TASK_NAME = 'background-location-task';
 
@@ -123,46 +124,40 @@ export default function App({ route, Navigation }) {
   return (
     <AuthContext.Provider value={authContext}>
       <NavigationContainer>
-        <StatusBar barStyle="auto" />
+        <StatusBar barStyle= "dark"/>
         {state.userToken != null ?
         (<Tab.Navigator initialRouteName={MainScreen} screenOptions={({route}) => ({tabBarVisible: isTabBarVisible(route)})}>
-          <Tab.Screen 
-            name="MainScreen" 
-            component={MainScreen} 
-            options={{
-              tabBarLabel: "Main",
-              tabBarIcon: ({ color, size }) => (
-                <Icon name="ios-map" color={color} size={size} />
-              )
-            }}
-          />
-          <Tab.Screen 
+           <Tab.Screen 
             name="ListScreen" 
             component={ListScreen} 
             options={{
-              tabBarLabel: "List",
+              tabBarLabel: " ",
               tabBarIcon: ({ color, size }) => (
-                <Icon name="ios-list" color={color} size={size} />
+                <SimpleLineIcons name="menu" size={24} color="black" />
+                //<Icon name="ios-list" color={color} size={size} />
               ),
             }}
           />
           <Tab.Screen 
-            name="Othersdata" 
-            component={Othersdata} 
+            name="MainScreen" 
+            component={MainScreen} 
             options={{
-              tabBarLabel: "Others",
+              tabBarLabel: " ",
               tabBarIcon: ({ color, size }) => (
-                <Icon name="ios-add" color={color} size={size} />
+                <SimpleLineIcons name="home" size={30} color="black" />
+                //<Icon name="home-outline" color={color} size={size} />
               )
             }}
           />
+         
           <Tab.Screen 
             name="Settingdata" 
             component={Settingdata} 
             options={{
-              tabBarLabel: "Setting",
+              tabBarLabel: " ",
               tabBarIcon: ({ color, size }) => (
-                <Icon name="ios-settings" color={color} size={size} />
+                <Feather name="more-horizontal" size={30} color="black" />
+               // <Icon name="ios-more" color={color} size={size} />
               )
             }}
           />

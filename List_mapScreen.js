@@ -45,21 +45,9 @@ export default function List_mapScreen({ route, navigation }) {
         // /> 
       }
       </MapView>
-      <View style={styles.container}>
-        <View style={styles.checkbutton}>
-          <CustomButton
-            title={ "Go Back" } 
-            alignItems="center"
-            onPress={() => {
-              Alert.alert("Alert","Go Back"), 
-              navigation.goBack()
-            }}
-          />
-        </View>
-      </View>
       <View style={styles.textcontainer}>
         <View style={{marginBottom: 10}}><Text style={styles.MainText}>{address.substring(5,)}</Text></View>
-        <Text style={styles.SubText}>확진자 방문시각: {time}</Text>
+        <Text style={{color:'#960101',fontSize:15}}>확진자 방문시각: {time}</Text>
       </View>
     </View>
   );
@@ -81,7 +69,7 @@ const styles = StyleSheet.create({
     flex: 3,
     alignItems: 'center',
     justifyContent: "center",
-    backgroundColor: "#48FFFF",
+    backgroundColor: "#FFFFFF",
     borderTopWidth: 2,
     borderBottomWidth: 2,
     borderColor: "#FFCCFF"
@@ -92,27 +80,18 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#48FFFF"
   },
-  checkbutton: {
-    width: '60%',
-    height: "50%",
-    color: "#2c2c2c",
-    justifyContent: 'center',
-    fontSize: 24,
-    borderWidth: 2,
-    marginTop: 10,
-    marginBottom: 5,
-    borderRadius: 5,
-    borderColor: "#FFCCFF"
-  },
+ 
   textcontainer: {
       flex: 2,
       padding: 25,
       backgroundColor: "white",
+      borderTopWidth: 6,
+      borderColor: "#A0C6FF"
   },
   MainText: {
     fontSize: 21,
   },
   SubText: {
-    fontSize: 18
+    fontSize: 18,
   }
 });

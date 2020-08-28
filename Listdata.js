@@ -123,7 +123,7 @@ export default class Listdata extends Component {
                         <View style={[styles.listlayout, {backgroundColor: marker.backgroundColor}]} key={index}>
                             <View style={styles.texttitlelayout} key={marker.titlekey}>
                               <Custombutton
-                                fontSize={25}
+                                fontSize={15}
                                 title={marker.title}
                                 alignItems="flex-start"
                                 buttonColor={marker.backgroundColor}
@@ -159,9 +159,9 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 2,
-    backgroundColor: "#48FFFF",
-    borderTopWidth: 2,
-    borderColor: "#FFCCFF"
+    backgroundColor: "#A0C6FF",
+    borderTopWidth: 1,
+    borderColor: "#A0C6FF"
   },
   Scrollcontainer: {
       flex: 1,
@@ -173,23 +173,23 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     backgroundColor: "white",
     flexDirection: 'row',
-    marginTop: 5,
-    marginBottom: 5,
+    marginTop: 1,
+    marginBottom: 1,
     borderTopWidth: 1,
     borderBottomWidth: 1,
-    borderColor: "#FFCCFF"
+    borderColor: "#A0C6FF"
   },
   texttitlelayout: {
     color: "black",
-    marginLeft: 20,
-    fontSize: 25,
-    width: "70%",
+    marginLeft: 15,
+    fontSize: 10,
+    width: "75%",
     borderRightWidth: 1,
-    borderColor: "#FFCCFF"
+    borderColor: "#2c2c2c"
   },
   texttimelayout: {
     color: "black",
-    marginRight: 20,
-    fontSize: 25,
+    marginRight:30,
+    fontSize: 15,
   },
 });

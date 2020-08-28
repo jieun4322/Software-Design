@@ -16,7 +16,7 @@ export default function Settingdata({ navigation }) {
   return (
       <View style={styles.maincontainer}>
         <View style={styles.Topbar}>
-          <Text style={{fontSize: 25}}>Setting</Text>
+          <Text style={{fontSize: 30}}>Option</Text>
         </View>
         <View style={styles.container}>
           <View style={styles.Settingbutton}>
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     flex: 10
   },
   Topbar: {
-    flex: 1,
+    flex: 2,
     color: "black",
     backgroundColor: "white",
     alignItems: 'center',
@@ -59,23 +59,23 @@ const styles = StyleSheet.create({
   container: {
     flex: 13,
     justifyContent: "flex-start",
-    backgroundColor: "#48FFFF",
-    borderTopWidth: 2,
-    borderColor: "#FFCCFF",
-    padding: 15
+    backgroundColor: "#FFFFFF",
+    //borderTopWidth: 2,
+    //borderColor: "#2c2c2c",
+     padding: 15
   },
   menubar: {
     flex: 1,
     alignItems: 'center',
     justifyContent: "center",
-    backgroundColor: "#48FFFF"
+    backgroundColor: "#FFFFFF"
   },
   checkbutton: {
     flex: 1,
     width: '60%',
-    color: "#2c2c2c",
+    color: "#3F3D3F",
     justifyContent: 'center',
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: "300",
     borderWidth: 2,
     marginTop: 10,
@@ -83,10 +83,11 @@ const styles = StyleSheet.create({
     borderRadius: 5
   },
   Settingbutton: {
-    height: "10%",
-    marginBottom: 15,
-    borderWidth: 1,
-    borderColor: "#FFCCFF",
+    height: "8%",
+    marginBottom:8,
+    borderBottomWidth: 1,
+    //borderWidth: 1,
+    borderColor: "#939393",
     fontSize: 25,
   },
 });

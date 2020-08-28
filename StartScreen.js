@@ -6,7 +6,7 @@ export default class StartScreen extends Component {
    render() {
        return (
         <View style={styles.container}>
-            <View style={styles.header} />
+            <View style={{alignItems: "center"}} />
             <View style={styles.title}>
                 <Text style={{fontSize:35,color:'black'}}>Map App</Text>
             </View>
@@ -14,17 +14,17 @@ export default class StartScreen extends Component {
             <View style={styles.button1}>
               <CustomButton
                   titleColor={"white"}
-                  buttonColor={'#444'}
-                  title={'회원가입'}
-                  onPress={() => this.props.navigation.navigate("SignUp")}
+                  buttonColor={'#023e73'}
+                  title={'로그인'}
+                  onPress={() => this.props.navigation.navigate("Login")}
               />
             </View>
             <View style={styles.button2}>
               <CustomButton
                   titleColor={"white"}
-                  buttonColor={'#023e73'}
-                  title={'로그인'}
-                  onPress={() => this.props.navigation.navigate("Login")}
+                  buttonColor={'#444'}
+                  title={'회원가입'}
+                  onPress={() => this.props.navigation.navigate("SignUp")}
               />
             </View>
         </View>
