@@ -5,7 +5,7 @@ import {AuthContext} from './GlobalVar';
 import firebase from "firebase";
 import SocialSignInButton from './SocialSigninButton';
 
-export default function Login({ navigation }) {
+export default function LoginScreen({ navigation }) {
     const [value1, onChangeText1] = React.useState('');
     const [value2, onChangeText2] = React.useState('');
     const { signIn } = React.useContext(AuthContext);

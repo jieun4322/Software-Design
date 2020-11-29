@@ -48,7 +48,7 @@ custombutton.propTypes = {
 
 const styles = StyleSheet.create({
   button: {
-    flex: 1,
-    justifyContent: 'center',
+      flex: 1,
+      justifyContent: 'center',
   },
 });

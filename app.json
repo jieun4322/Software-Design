@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "map_app",
-    "slug": "map_app",
-    "scheme": "mapapp",
+    "name": "Real Life Word",
+    "slug": "Real_Life_Word",
+    "scheme": "reallifeword",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

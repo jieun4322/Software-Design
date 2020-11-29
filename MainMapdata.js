@@ -4,7 +4,7 @@ import CustomButton from './custombutton';
 import MapView, { PROVIDER_GOOGLE, Marker, UrlTile } from 'react-native-maps';
 import * as Location from "expo-location";
 
-export default class MainScreen extends Component {
+export default class MainMapdata extends Component {
   state = {
     region: {
       latitude: 37.4219857,

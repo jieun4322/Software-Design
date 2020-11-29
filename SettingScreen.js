@@ -4,7 +4,7 @@ import Custombutton from './custombutton';
 import {AuthContext} from './GlobalVar';
 import firebase from "firebase";
 
-export default function Settingdata({ navigation }) {
+export default function SettingScreen({ navigation }) {
   const { signOut } = React.useContext(AuthContext);
   const onPress = async() => {
     firebase.auth().signOut().then(()=>{

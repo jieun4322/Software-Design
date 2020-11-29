@@ -10,7 +10,7 @@ import SvgGoogle from './assets/svgs/google.svg';
 import {AuthContext} from "./GlobalVar";
 
 YellowBox.ignoreWarnings(['Setting a timer']);
-export default function SignUp({ navigation }) {
+export default function SignUpScreen({ navigation }) {
   const [value1, onChangeText1] = useState('');
   const [value2, onChangeText2] = useState('');
   const [value3, onChangeText3] = useState('');
