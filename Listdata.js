@@ -2,90 +2,61 @@ import React, {Component} from 'react';
 import { StyleSheet, View, Text, ScrollView, Alert } from 'react-native';
 import DropdownMenu from 'react-native-dropdown-menu';
 import Custombutton from "./custombutton";
+import * as Application from 'expo-application';
+import firebase from "firebase";
+import '@firebase/firestore';
+import { AppLoading } from 'expo';
 
 export default class Listdata extends Component {
   state = {
-    markers: [{
-        title:"대한민국 대구광역시 북구 산격동 1327-15",
-        time: "00:00",
-        titlekey: "17",
-        timekey: "18",
-      },
-      {
-        title:"대한민극 대구광역시 북구 대현동 261-1",
-        time: "01:00",
-        titlekey: "19",
-        timekey: "20",
-      },
-      {
-        title:"대한민국 대구광역시 동구 신암1동 신암북로7길 36-25",
-        time: "02:00",
-        titlekey: "21",
-        timekey: "22",
-      },
-      {
-        title:"대한민국 대구광역시 중구 성내2동 87-2",
-        time: "03:00",
-        titlekey: "23",
-        timekey: "24",
-      },
-      {
-        title:"대한민국 대구광역시 신천3동 19-1",
-        time: "04:00",
-        titlekey: "25",
-        timekey: "26",
-      },
-      {
-        title:"대한민국 대구광역시 북구 산격동 1185-1",
-        time: "05:00",
-        titlekey: "27",
-        timekey: "28",
-      },
-      {
-        title:"대한민국 대구광역시 동구 신암4동 294-3",
-        time: "06:00",
-        titlekey: "29",
-        timekey: "30",
-      },
-      {
-        title:"대한민국 대구광역시 북구 복현동 539-86",
-        time: "07:00",
-        titlekey: "31",
-        timekey: "32",
-      },
-      {
-        title:"대한민국 대구광역시 북구 칠성동2가 302-155",
-        time: "08:00",
-        titlekey: "33",
-        timekey: "34",
-      },
-      {
-        title:"대한민국 대구광역시 중구 북성로2가 19-3",
-        time: "09:00",
-        titlekey: "35",
-        timekey: "36",
-      },
-      {
-        title:"대한민국 대구광역시 동구 신암4동 578-3",
-        time: "10:00",
-        titlekey: "37",
-        timekey: "38",
-      },
-      {
-        title:"대한민국 대구광역시 동구 신천4동 386-2",
-        time: "11:00",
-        titlekey: "39",
-        timekey: "40",
-      }],
+    markers: [],
     markersize: 2,
     text: '',
-    temp: true
+    temp: true,
+    isReady: false
   };
   constructor(props) {
     super(props)
   }
+  call_from_storage = async() => {
+    const db = firebase.firestore();
+    //DeviceInfo.getUniqueId().then(async(uniqueId) => {
+    //  await db.collection("Users").doc(uniqueId).collection("Translate_recode").get()
+    //  .then((snapshot) => {
+    //    snapshot.docs.map((doc) => 
+    //      doc !== null ? (
+    //        data.push([doc.data, "해석"])
+    //      ) : null
+    //    )
+    //  })
+    //});
+    await db.collection("Users").doc(Application.androidId).collection("Translate_recode").get()
+    .then((snapshot) => {
+      var list = [];
+      snapshot.docs.map((doc) => {
+        doc !== null ? (
+          list.push([doc.data().data, doc.data().trans])
+        ) : null
+      })
+      this.setState({
+        markers: list
+      })
+    })
+    .catch(error => console.log(`error: ${error}`))
+  }
+  //componentDidMount() {
+  //  this.call_from_storage();
+  //}
   render() {
-    var data = [["Date 1","Date 2","Date 3","Date 4","Date 5","Date 6","Date 7","Date 8","Date 9","Date 10"]];
+    if (!this.state.isReady) {
+      return (
+        <AppLoading
+          startAsync={this.call_from_storage}
+          onFinish={()=>this.setState({isReady: true})}
+          onError={console.warn}
+        />
+      )
+    }
     return (
         <View style={styles.dropmenubar}>
           
@@ -95,19 +66,22 @@ export default class Listdata extends Component {
                     return (
                         <View style={[styles.listlayout]} key={index}>
                               <Custombutton
+                                fontSize={25}
+                                title={marker[0]}
+                                alignItems="center"
+                                onPress={() => {Alert.alert("Alert", marker[0])}}
+                              />
+                              <Custombutton
                                 fontSize={15}
-                                title={marker.title}
-                                alignItems="flex-start"
-                                onPress={() => {Alert.alert("Alert", marker.title), this.props.navigation.navigate("List_mapScreen",{address:marker.title})}}
+                                title={marker[1]}
+                                alignItems="center"
+                                onPress={() => {Alert.alert("Alert", marker[1])}}
                               />
                         </View>
                     )
                   })}
               </ScrollView>
             </View>
-                <Text>
-                  번역 기록
-                </Text>
         </View>
     );
   }
@@ -136,12 +110,9 @@ const styles = StyleSheet.create({
   listlayout: {
     width: "100%",
     height: 70,
-    alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "center",
     backgroundColor: "white",
-    flexDirection: 'row',
-    marginTop: 1,
-    marginBottom: 1,
+    marginVertical: 2,
     borderTopWidth: 1,
     borderBottomWidth: 1,
     borderColor: "#A0C6FF"

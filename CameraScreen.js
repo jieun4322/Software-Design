@@ -104,8 +104,14 @@ export default function CameraScreen({ navigation }) {
     })
       .then((res) => res.json())
       .then((data) => {
+        if (data.error != null) {
+          console.log(data.error.code + " error : \n" + data.error.errors[0].message);
+          setfullTextAnnotation(data.error.code + " error : \n" + data.error.errors[0].message);
+          return;
+        }
         console.log(data.responses[0].fullTextAnnotation.text);
         setfullTextAnnotation(data.responses[0].fullTextAnnotation.text);
+        navigation.navigate("TranslationScreen", {Textdata: data.responses[0].fullTextAnnotation.text});
       })
       .catch((err) => console.log('error : ', err));
   };

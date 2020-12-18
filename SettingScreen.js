@@ -5,13 +5,13 @@ import {AuthContext} from './GlobalVar';
 import firebase from "firebase";
 
 export default function SettingScreen({ navigation }) {
-  const { signOut } = React.useContext(AuthContext);
-  const onPress = async() => {
-    firebase.auth().signOut().then(()=>{
-      signOut(null), 
-      Alert.alert("로그아웃되었습니다.")
-    })
-  }
+  //const { signOut } = React.useContext(AuthContext);
+  //const onPress = async() => {
+  //  firebase.auth().signOut().then(()=>{
+  //    signOut(null), 
+  //    Alert.alert("로그아웃되었습니다.")
+  //  })
+  //}
   const data = [["Date 1","Date 2","Date 3","Date 4","Date 5","Date 6","Date 7","Date 8","Date 9","Date 10"]];
   return (
       <View style={styles.maincontainer}>
@@ -34,9 +34,11 @@ export default function SettingScreen({ navigation }) {
           <View style={styles.Settingbutton}>
             <Custombutton title={"Lisence"} onPress={() => Alert.alert("Alert","Lisence")}/>
           </View>
-          <View style={styles.Settingbutton}>
-            <Custombutton title={"Sign Out"} onPress={() => Alert.alert("Alert","로그아웃 하시겠습니까?", [{text: "No", onPress: () => null},{text: "Yes", onPress: onPress}])} />
-          </View>
+          {
+          //<View style={styles.Settingbutton}>
+          //  <Custombutton title={"Sign Out"} onPress={() => Alert.alert("Alert","로그아웃 하시겠습니까?", [{text: "No", onPress: () => null},{text: "Yes", onPress: onPress}])} />
+          //</View>
+          }
         </View>
       </View>
   );

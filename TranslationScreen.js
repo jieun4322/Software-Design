@@ -1,10 +1,16 @@
 import * as React from 'react';
-import { StyleSheet, View, Text, Alert, TextInput } from 'react-native';
+import { StyleSheet, View, Text, Alert, TextInput, Platform, ScrollView } from 'react-native';
 import Custombutton from './custombutton';
 import {AuthContext} from './GlobalVar';
 import firebase from "firebase";
 import { TouchableOpacity } from 'react-native';
 import { IconButton } from 'react-native-paper';
+//import * as AuthSession from 'expo-auth-session';
+//import DeviceInfo from 'react-native-device-info';
+import * as Application from 'expo-application';
+//import {get_newsParsing} from "./newsParsing";
+import '@firebase/firestore';
+global.Buffer = global.Buffer || require('buffer').Buffer;
 // Imports the Google Cloud client library
 //const translate = require('google-translate-api');
 //const {Translate} = require('@google-cloud/translate').v2;
@@ -21,13 +27,96 @@ import { IconButton } from 'react-native-paper';
 // language: en
 // question: value
 
-export default function TranslationScreen({ navigation }) {
+export default function TranslationScreen({ route, navigation }) {
   const [value, onChangeText] = React.useState('');
-  const [fullTextAnnotation, setfullTextAnnotation] = React.useState('');
+  const [fullTextAnnotation, setfullTextAnnotation] = React.useState("");
+  const [newsparsing, setnewsparsing] = React.useState("");
+  const [textparsing, settextparsing] = React.useState("");
   const [language_source, setlanguage_source] = React.useState("한국어");
   const [language_target, setlanguage_target] = React.useState("영어");
   const [language_source_en, setlanguage_source_en] = React.useState("ko");
   const [language_target_en, setlanguage_target_en] = React.useState("en");
+  const [errors, setErrors] = React.useState(false);
+
+  const {Textdata} = route.params;
+
+  //const { makeRedirectUri, useAuthRequest, ResponseType, Prompt, useAutoDiscovery } = AuthSession;
+  //const useProxy = Platform.select({ web: false, default: true });
+  //const discovery = useAutoDiscovery('https://example.com/auth');
+  //const [request, response, promptAsync] = useAuthRequest(discovery, {useProxy: useProxy})
+
+  
+  //const SaveText = async() => {
+  //  const db = firebase.firestore();
+  //  var accessToken;
+  //  try {
+  //    const result = await promptAsync({ useProxy });
+  //    if (result.type !== 'success') {
+  //      if (Platform.OS === 'web') {
+  //        // @ts-ignore
+  //        alert('ERROR_UNKNOWN');
+  //        return;
+  //      }
+  //      Alert.alert('ERROR', 'ERROR_UNKNOWN');
+  //      return;
+  //    }
+  //    accessToken = result.params.access_token;
+  //    await db.collection("Users").doc(accessToken).collection("Translate_recode").set({data: value, trans: fullTextAnnotation});
+  //  }  catch (err) {
+  //    if (Platform.OS === 'web') {
+  //      // @ts-ignore
+  //      alert(`Login Error`, `${err.message}`);
+  //      return;
+  //    }
+  //    Alert.alert(`Login Error`, `${err.message}`);
+  //  }
+  //};
+  
+  const SaveText = async() => {
+    const db = firebase.firestore();
+    //DeviceInfo.getUniqueId().then(async(uniqueId) => {
+    //  console.log(uniqueId)
+    //  await db.collection("Users").doc(uniqueId).collection("Translate_recode").set({data: value, trans: fullTextAnnotation});
+    //});
+    await db.collection("Users").doc(Application.androidId).collection("Translate_recode").add({data: value, trans: fullTextAnnotation});
+  };
+  const axios = require("axios");
+  const cheerio = require("cheerio");
+
+
+  //export var keyword = 'sports'//검색 키워드
+  var url = 'https://news.google.com/search?q=';  
+  var ulList = [];
+
+  const getHtml = async (keyword) => {
+    try {
+      return await axios.get(url + keyword);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const get_newsParsing = async(keyword) => {
+    getHtml(keyword)
+      .then(html => {
+        const $ = cheerio.load(html.data);
+        const $bodyList = $("div.xrnccd").children("article");
+
+        $bodyList.each(function(i, elem) {
+          ulList[i] = {
+              title: $(this).find('h3 > a').text(),                             //제목
+              date: $(this).find('time').attr('datetime'),                      //날짜
+              url : 'http://news.google.com'+$(this).find('h3 > a').attr('href')//링크
+          };
+        });
+
+        const data = ulList.filter(n => n.title);
+        //console.log(data);
+
+        setnewsparsing(data[0].title + '\n' + data[1].title);
+      })//출력
+      //.then(res => console.log(res));
+  }
   /*async function translateText({ text, target }) {
     // Translates the text into the target language. "text" can be a string for
     // translating a single piece of text, or an array of strings for translating
@@ -53,8 +142,16 @@ export default function TranslationScreen({ navigation }) {
     })
       .then((res) => res.json())
       .then((data) => {
+        if (data.error !== undefined) {
+          console.log(data);
+          console.log(data.error.code + " error : \n" + data.error.errors[0].message);
+          setfullTextAnnotation(data.error.code + " error : \n" + data.error.errors[0].message);
+          setErrors(true);
+          return;
+        }
         console.log(data.data.translations[0].translatedText);
         setfullTextAnnotation(data.data.translations[0].translatedText);
+        setErrors(false);
       })
       .catch((err) => console.log('error : ', err));
   };
@@ -73,21 +170,35 @@ export default function TranslationScreen({ navigation }) {
     //translateText(value, "kr");
   }
 
+  const onsubmitediting = async() => {
+    if (value !== "") {
+      onKeyPress();
+      //keyword = value;
+      get_newsParsing(value);
+      if (errors === false) {
+        SaveText();
+      }
+    }
+  }
+
   const trans_language = () => {
     setlanguage_source(language_source === "한국어" ? "영어" : "한국어");
     setlanguage_target(language_target === "한국어" ? "영어" : "한국어");
     setlanguage_source_en(language_source_en === "ko" ? "en" : "ko");
     setlanguage_target_en(language_target_en === "ko" ? "en" : "ko");
-    let temp = value;
-    onChangeText(fullTextAnnotation);
-    setfullTextAnnotation(temp);
   }
 
   React.useEffect(() => {
-    onKeyPress()
+    onKeyPress();
   }, [value, language_source]);
   
+  React.useEffect(() => {
+    onChangeText(Textdata);
+    onsubmitediting();
+  }, [Textdata])
+  
   return (
+    //setfullTextAnnotation(Textdata),
     <View style={styles.maincontainer}>
         <View style={{flexDirection: "row", height: 55}}>
             <Text style={{flex: 5, textAlign: "center", textAlignVertical: "center", backgroundColor: "white", borderBottomWidth: 0.5, borderBottomColor: "#EAEAEA", fontSize: 17}}>
@@ -100,8 +211,9 @@ export default function TranslationScreen({ navigation }) {
                 {language_target}
             </Text>
         </View>
-        <View style={[{padding: 10, flex: 5, backgroundColor: "white", flexDirection: "row" }, styles.shadow1]}>
+        <View style={[{ flex: 5, padding: 10, backgroundColor: "white", flexDirection: "row" }, styles.shadow1]}>
           <View style={{flex: 8}}>
+            <ScrollView>
             <TextInput 
               style={{flex: 1, justifyContent: 'center', fontSize: 25 }}
               onChangeText={text => onChangeText(text)}
@@ -111,19 +223,48 @@ export default function TranslationScreen({ navigation }) {
               editable={true}
               placeholder={"번역할 내용을 입력하세요."}
               blurOnSubmit={true}
-              onSubmitEditing={onKeyPress}
+              onSubmitEditing={onsubmitediting}
             />
+            </ScrollView>
           </View>
           {value !== '' ? (<View style={{flex: 1}}>
             <IconButton icon="close" color="black" onPress={() => onChangeText('')}/>
           </View>) : null}
         </View>
         <View style={{ flex: 16, padding: 10 }}>
+          <ScrollView>
             <Text
               style={{ flex: 1, justifyContent: 'center', fontSize: 25 }}
             >
               {fullTextAnnotation}
             </Text>
+            {
+              value !== "" ? (
+              <>
+                <Text
+                  style={{ flex: 1, justifyContent: 'center', fontSize: 25 }}
+                >
+                  {"\n----------------------------\n"}
+                </Text>
+                <Text
+                  style={{ flex: 1, justifyContent: 'center', fontSize: 25 }}
+                >
+                  {`예문 파싱: \n${textparsing}`}
+                </Text>
+                <Text
+                  style={{ flex: 1, justifyContent: 'center', fontSize: 25 }}
+                >
+                  {"\n"}
+                </Text>
+                <Text
+                  style={{ flex: 1, justifyContent: 'center', fontSize: 25 }}
+                >
+                  {`기사 파싱: \n${newsparsing}`}
+                </Text>
+              </>
+              ) : null
+            }
+          </ScrollView>
         </View>
     </View>
   );

@@ -12,7 +12,7 @@ export default function TranslatorScreen({ navigation }) {
   return (
     <MainStack.Navigator screenOptions={{headerShown: false}} initialRouteName={MainScreen}>
       <MainStack.Screen name="MainScreen" component={MainScreen} />
-      <MainStack.Screen name="TranslationScreen" component={TranslationScreen} />
+      <MainStack.Screen name="TranslationScreen" component={TranslationScreen} initialParams={{ Textdata: "" }} />
       <MainStack.Screen name="PhotofileScreen" component={PhotofileScreen} />
       <MainStack.Screen name="CameraScreen" component={CameraScreen} />
     </MainStack.Navigator>

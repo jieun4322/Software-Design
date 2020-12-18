@@ -212,13 +212,14 @@ import {
 
 const DrawNavi = () => {
   return (
-    <Drawer.Navigator>
+    <Drawer.Navigator >
       <Drawer.Screen 
         name="TranslatorScreen" 
         component={TranslatorScreen} 
         options={{
           drawerLabel: '번역', 
-          drawerIcon: ({ focused, color, size }) => <SimpleLineIcons color={color} size={size} name= 'doc' />
+          drawerIcon: ({ focused, color, size }) => <SimpleLineIcons color={color} size={size} name= 'doc' />,
+          unmountOnBlur: true
         }}
      />
       <Drawer.Screen 
@@ -226,7 +227,8 @@ const DrawNavi = () => {
         component={VocaScreen} 
         options={{
           drawerLabel: '단어장', 
-          drawerIcon: ({ focused, color, size }) => <SimpleLineIcons color={color} size={size} name='note' />
+          drawerIcon: ({ focused, color, size }) => <SimpleLineIcons color={color} size={size} name='note' />,
+          unmountOnBlur: true
         }}
       />
       <Drawer.Screen 
@@ -234,7 +236,8 @@ const DrawNavi = () => {
         component={ListScreen} 
         options={{
           drawerLabel: '번역 기록', 
-          drawerIcon: ({ focused, color, size }) => <SimpleLineIcons color={color} size={size} name='book-open' />
+          drawerIcon: ({ focused, color, size }) => <SimpleLineIcons color={color} size={size} name='book-open' />,
+          unmountOnBlur: true
         }}
       />
       <Drawer.Screen 
@@ -242,7 +245,8 @@ const DrawNavi = () => {
         component={SettingScreen} 
         options={{
           drawerLabel: '설정', 
-          drawerIcon: ({ focused, color, size }) => <SimpleLineIcons color={color} size={size} name='wrench' />
+          drawerIcon: ({ focused, color, size }) => <SimpleLineIcons color={color} size={size} name='wrench' />,
+          unmountOnBlur: true
         }}
       />
     </Drawer.Navigator>
