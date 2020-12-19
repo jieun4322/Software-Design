@@ -96,7 +96,7 @@ export default function TranslationScreen({ route, navigation }) {
     }
   };
 
-  const get_newsParsing = async(keyword) => {
+  const get_newsParsing = (keyword) => {
     getHtml(keyword)
       .then(html => {
         const $ = cheerio.load(html.data);
@@ -112,8 +112,16 @@ export default function TranslationScreen({ route, navigation }) {
 
         const data = ulList.filter(n => n.title);
         //console.log(data);
-
-        setnewsparsing(data[0].title + '\n' + data[1].title);
+        
+        if (data[0] === undefined) {
+          setnewsparsing("뉴스로부터 파싱해올 수 없습니다.");
+        }
+        else if (data[1] === undefined) {
+          setnewsparsing(data[0].title);
+        }
+        else {
+          setnewsparsing(data[0].title + '\n' + data[1].title);
+        }
       })//출력
       //.then(res => console.log(res));
   }
@@ -156,8 +164,10 @@ export default function TranslationScreen({ route, navigation }) {
       .catch((err) => console.log('error : ', err));
   };
 
-  const onKeyPress = async() => {
-    callGoogletranslateApi();
+  const onKeyPress = () => {
+    if (value !== "") {
+      callGoogletranslateApi();
+    }
    /* translate('Ik spreek Engels', {to: 'en'}).then(res => {
       console.log(res.text);
       //=> I speak English
@@ -170,7 +180,7 @@ export default function TranslationScreen({ route, navigation }) {
     //translateText(value, "kr");
   }
 
-  const onsubmitediting = async() => {
+  const onsubmitediting = () => {
     if (value !== "") {
       onKeyPress();
       //keyword = value;

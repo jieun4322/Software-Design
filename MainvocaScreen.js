@@ -60,7 +60,7 @@ export default function MainvocaScreen({ navigation }) {
   const call_from_storage = async() => {
     const db = firebase.firestore();
     //DeviceInfo.getUniqueId().then(async(uniqueId) => {
-    //  await db.collection("Users").doc(uniqueId).collection("Translate_recode").get()
+    //  await db.collection("Users").doc(uniqueId).collection("Words").get()
     //  .then((snapshot) => {
     //    snapshot.docs.map((doc) => 
     //      doc !== null ? (
@@ -69,12 +69,12 @@ export default function MainvocaScreen({ navigation }) {
     //    )
     //  })
     //});
-    await db.collection("Users").doc(Application.androidId).collection("Translate_recode").get()
+    await db.collection("Users").doc(Application.androidId).collection("Words").get()
     .then((snapshot) => {
       var list = data1;
       snapshot.docs.map((doc) => {
         doc !== null ? (
-          list.push([doc.data().data, doc.data().trans])
+          list.push([doc.data().data, doc.data().meaning])
         ) : null
       })
       setdata1(Array.from(new Set(list)));

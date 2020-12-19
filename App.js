@@ -212,7 +212,7 @@ import {
 
 const DrawNavi = () => {
   return (
-    <Drawer.Navigator >
+    <Drawer.Navigator initialRouteName={TranslatorScreen}>
       <Drawer.Screen 
         name="TranslatorScreen" 
         component={TranslatorScreen} 
