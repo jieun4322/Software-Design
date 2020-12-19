@@ -168,6 +168,9 @@ export default function TranslationScreen({ route, navigation }) {
     if (value !== "") {
       callGoogletranslateApi();
     }
+    else {
+      setfullTextAnnotation("");
+    }
    /* translate('Ik spreek Engels', {to: 'en'}).then(res => {
       console.log(res.text);
       //=> I speak English
